@@ -1,0 +1,1 @@
+docker run --rm -v /Users/abataloff/Code/abataloff/SWL/DB/migrations:/root/migrations -v /Users/abataloff/Code/abataloff/SWL/DB/sqlite.db:/root/sqlite.db abataloff/dbmigrator

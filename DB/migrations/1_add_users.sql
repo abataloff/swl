@@ -6,4 +6,3 @@ CREATE TABLE users
 
 -- +migrate Down
 DROP TABLE users;
-DROP INDEX users_id_uindex;

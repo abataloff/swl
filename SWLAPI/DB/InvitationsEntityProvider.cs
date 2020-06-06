@@ -17,38 +17,41 @@ namespace SWLAPI.DB
             _connectionString = connectionString;
         }
 
-        public Invitation Create()
+        public UserRegistrationInvitation Create()
         {
-            return new Entity.Invitation();
+            return new Entity.UserRegistrationInvitation();
         }
 
-        public void Push(Invitation invitation)
+        public void Push(UserRegistrationInvitation userRegistrationInvitation)
         {
-            Push(invitation as Entity.Invitation);
+            Push(userRegistrationInvitation as Entity.UserRegistrationInvitation);
         }
 
-        private void Push(Entity.Invitation invitation)
+        private void Push(Entity.UserRegistrationInvitation userRegistrationInvitation)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                if (invitation.InDb)
+                if (userRegistrationInvitation.InDb)
                 {
-                    
-                    command.CommandText = $"UPDATE invitations SET id=$id, email= $email, token=$token";
-                    command.Parameters.Add(new SqliteParameter("$id", invitation.Id));
+                    command.CommandText =
+                        $"UPDATE user_registration_invitations SET id=$id, communication_channel_type=$communication_channel_type identifier_hash=$identifier_hash, token=$token";
+                    command.Parameters.Add(new SqliteParameter("$id", userRegistrationInvitation.Id));
                 }
                 else
                 {
                     command.CommandText =
-                        $@"INSERT INTO invitations (id, email, token)
-                      VALUES (null, $email, $token)";
+                        $@"INSERT INTO user_registration_invitations (id, communication_channel_type, identifier_hash, token)
+                      VALUES (null, $communication_channel_type, $identifier_hash, $token)";
                 }
 
-                command.Parameters.Add(new SqliteParameter("$email", invitation.Email.GetSHA1()));
-                command.Parameters.Add(new SqliteParameter("$token", invitation.Token));
+                command.Parameters.Add(new SqliteParameter("$identifier_hash",
+                    userRegistrationInvitation.IdentifierHash));
+                command.Parameters.Add(new SqliteParameter("$token", userRegistrationInvitation.Token));
+                command.Parameters.Add(new SqliteParameter("communication_channel_type",
+                    userRegistrationInvitation.CommunicationChannelType));
 
                 var obj = command.ExecuteScalar();
 

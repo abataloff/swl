@@ -1,12 +1,12 @@
 namespace SWLAPI.DB.Entity
 {
-    public class Invitation: SWLAPI.DataProvider.Entity.Invitation
+    public class UserRegistrationInvitation: SWLAPI.DataProvider.Entity.UserRegistrationInvitation
     {
         private ulong _id;
         // TODO: Переименовать поле
         private bool _inDb = false;
 
-        public Invitation()
+        public UserRegistrationInvitation()
         {
         }
 
@@ -27,14 +27,14 @@ namespace SWLAPI.DB.Entity
 
         }
 
-        private Invitation(ulong id)
+        private UserRegistrationInvitation(ulong id)
         {
             Id = id;
         }
 
-        public Invitation FromDb(ulong id)
+        public UserRegistrationInvitation FromDb(ulong id)
         {
-            return new Invitation(id);
+            return new UserRegistrationInvitation(id);
         }
     }
 }

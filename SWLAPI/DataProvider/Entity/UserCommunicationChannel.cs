@@ -5,6 +5,10 @@ namespace SWLAPI.DataProvider.Entity
 {
     public abstract class UserCommunicationChannel
     {
+        public enum Types
+        {
+            Email
+        }
         public abstract User User { get; set; }
     }
 }

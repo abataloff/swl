@@ -16,11 +16,6 @@ namespace SWLAPI.DB.Entity
             public const int IdentifierHash = 3;
         }
 
-        public enum Types
-        {
-            Email
-        }
-
         private readonly ulong _id;
 
         private UserCommunicationChannel(ulong id)

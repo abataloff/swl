@@ -3,7 +3,7 @@ using SWLAPI.DataProvider.Entity;
 
 namespace SWLAPI.DataProvider
 {
-    public interface IInvitationsEntityProvider : IEntityProvider<Invitation>
+    public interface IInvitationsEntityProvider : IEntityProvider<UserRegistrationInvitation>
     {
     }
 }

@@ -28,8 +28,10 @@ namespace SWLAPI.DB
                 command.CommandText =
                     $@"SELECT *
                       FROM user_communication_channels 
-                      WHERE identifier_hash='$identifier_hash' AND type='Email';";
+                      WHERE identifier_hash='$identifier_hash' AND type='$type';";
                 command.Parameters.Add(new SqliteParameter("$identifier_hash", identifierHash));
+                command.Parameters.Add(new SqliteParameter("$type",
+                    DataProvider.Entity.UserCommunicationChannel.Types.Email.ToString()));
 
                 var reader = command.ExecuteReader();
                 if (reader.HasRows)

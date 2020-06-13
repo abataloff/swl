@@ -10,7 +10,8 @@ using SWLAPI.Services;
 
 namespace SWLAPI.Controllers
 {
-    [Route("auth")]
+    [Route("/v0/auth")]
+    [Route("/auth")]
     public class AuthenticationController : Controller
     {
         private readonly MainEventBus _mainEventBus;
@@ -30,6 +31,11 @@ namespace SWLAPI.Controllers
         [Authorize(AuthenticationSchemes = SchemesNamesConst.SecretAuthenticationHandler)]
         public HttpStatusCode Post([FromBody] AuthenticationData authenticationData)
         {
+            if (authenticationData.Value == null)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
             var retVal = default(HttpStatusCode);
             var authenticationType = authenticationData.Type;
             switch (authenticationType)
@@ -44,7 +50,6 @@ namespace SWLAPI.Controllers
                         //retVal = HttpStatusCode.BadRequest;
                         throw new NotImplementedException();
                     }
-
                     break;
                 default:
                     throw new NotImplementedException();

@@ -11,9 +11,16 @@ namespace APIClient.v0
         {
         }
 
-        private struct LoginData
+
+        public enum UserAuthenticationType
         {
-            public string Email;
+            EmailLink
+        }
+
+        public struct AuthenticationData
+        {
+            public UserAuthenticationType Type;
+            public string Value;
         }
 
         public HttpStatusCode LoginByEmail(string email)
@@ -27,7 +34,8 @@ namespace APIClient.v0
             request.Method = WebRequestMethods.Http.Post;
             var requestStream = request.GetRequestStream();
             TextWriter requestBody = new StreamWriter(requestStream);
-            requestBody.Write(JsonConvert.SerializeObject(new LoginData {Email = email}));
+            requestBody.Write(JsonConvert.SerializeObject(new AuthenticationData
+                {Type = UserAuthenticationType.EmailLink, Value = email}));
             requestBody.Close();
             requestStream.Close();
 
